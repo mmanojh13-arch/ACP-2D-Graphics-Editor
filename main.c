@@ -8,9 +8,14 @@ char canvas[ROWS][COLS];
 void initCanvas()
 {
     int i, j;
+
     for(i = 0; i < ROWS; i++)
+    {
         for(j = 0; j < COLS; j++)
+        {
             canvas[i][j] = ' ';
+        }
+    }
 }
 
 void displayCanvas()
@@ -21,23 +26,43 @@ void displayCanvas()
 
     for(i = 0; i < ROWS; i++)
     {
+        /* Horizontal guide line */
+        for(j = 0; j < COLS; j++)
+            printf("_");
+        printf("\n");
+
+        /* Canvas row */
         for(j = 0; j < COLS; j++)
             printf("%c", canvas[i][j]);
-
         printf("\n");
     }
+
+    /* Bottom line */
+    for(j = 0; j < COLS; j++)
+        printf("_");
+    printf("\n");
 }
 
 void drawLine(int row, int col, int length)
 {
     int i;
+
+    if(row < 0 || row >= ROWS)
+        return;
+
     for(i = 0; i < length && col + i < COLS; i++)
-        canvas[row][col + i] = '*';
+    {
+        if(col + i >= 0)
+            canvas[row][col + i] = '*';
+    }
 }
 
 void drawRectangle(int row, int col, int height, int width)
 {
     int i;
+
+    if(row < 0 || col < 0 || row + height > ROWS || col + width > COLS)
+        return;
 
     for(i = 0; i < width; i++)
     {
@@ -56,10 +81,15 @@ void drawTriangle(int row, int col, int height)
 {
     int i, j;
 
+    if(row < 0 || col < 0 || row + height > ROWS)
+        return;
+
     for(i = 0; i < height; i++)
     {
-        for(j = 0; j <= i; j++)
+        for(j = 0; j <= i && col + j < COLS; j++)
+        {
             canvas[row + i][col + j] = '^';
+        }
     }
 }
 
@@ -67,10 +97,16 @@ void deleteArea(int row, int col, int height, int width)
 {
     int i, j;
 
-    for(i = row; i < row + height; i++)
-        for(j = col; j < col + width; j++)
-            canvas[i][j] = ' ';
+    for(i = row; i < row + height && i < ROWS; i++)
+    {
+        for(j = col; j < col + width && j < COLS; j++)
+        {
+            if(i >= 0 && j >= 0)
+                canvas[i][j] = ' ';
+        }
+    }
 }
+
 void drawCircle(int centerRow, int centerCol, int radius)
 {
     int i, j;
@@ -83,7 +119,9 @@ void drawCircle(int centerRow, int centerCol, int radius)
             int dy = j - centerCol;
 
             if(dx * dx + dy * dy <= radius * radius)
+            {
                 canvas[i][j] = 'O';
+            }
         }
     }
 }
@@ -111,47 +149,61 @@ int main()
         if(choice == 1)
         {
             int r, c, len;
+
             printf("Row Col Length: ");
-            scanf("%d%d%d", &r, &c, &len);
+            scanf("%d %d %d", &r, &c, &len);
+
             drawLine(r, c, len);
         }
         else if(choice == 2)
         {
             int r, c, h, w;
+
             printf("Row Col Height Width: ");
-            scanf("%d%d%d%d", &r, &c, &h, &w);
+            scanf("%d %d %d %d", &r, &c, &h, &w);
+
             drawRectangle(r, c, h, w);
         }
         else if(choice == 3)
         {
             int r, c, h;
+
             printf("Row Col Height: ");
-            scanf("%d%d%d", &r, &c, &h);
+            scanf("%d %d %d", &r, &c, &h);
+
             drawTriangle(r, c, h);
         }
         else if(choice == 4)
         {
             int r, c, h, w;
+
             printf("Row Col Height Width: ");
-            scanf("%d%d%d%d", &r, &c, &h, &w);
+            scanf("%d %d %d %d", &r, &c, &h, &w);
+
             deleteArea(r, c, h, w);
         }
         else if(choice == 5)
         {
-            int r,c,radius;
-            printf("CenterRow CenterCol Radius:");
-            scanf("%d%d%d",&r,&c,&radius);
-            drawCircle(r,c,radius);
-            displayCanvas();
+            int r, c, radius;
+
+            printf("CenterRow CenterCol Radius: ");
+            scanf("%d %d %d", &r, &c, &radius);
+
+            drawCircle(r, c, radius);
         }
         else if(choice == 6)
         {
             displayCanvas();
         }
-        else if(choice==7)
+        else if(choice == 7)
         {
             break;
         }
+        else
+        {
+            printf("Invalid Choice!\n");
+        }
     }
+
     return 0;
 }
