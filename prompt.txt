@@ -1,0 +1,36 @@
+MINI PROJECT - GENERATIVE AI PROMPTS
+
+----------------------------------------
+PROMPT 1:
+Give me a C program for a 2D graphics editor with line, rectangle, triangle, circle, and delete options.
+
+RESPONSE:
+I provided a full C program with a canvas, menu system, and functions like drawLine, drawRectangle, drawTriangle, drawCircle, and deleteArea.
+
+----------------------------------------
+PROMPT 2:
+Correct my C code for ACP 2D graphics editor.
+
+RESPONSE:
+I corrected syntax errors, fixed loop structure, improved boundary checks, and made the program GitHub-ready.
+
+----------------------------------------
+PROMPT 3:
+Give me clean and simple final code.
+
+RESPONSE:
+I provided a simplified, well-structured version of the full 2D graphics editor program in C.
+
+----------------------------------------
+PROMPT 4:
+Explain how to push code to GitHub.
+
+RESPONSE:
+Steps were given:
+git init
+git add .
+git commit -m "message"
+git remote add origin <repo link>
+git push -u origin main
+----------------------------------------
+END OF FILE
